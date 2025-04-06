@@ -4,7 +4,7 @@ import { useTextStore } from '@/store/store';
 import { textType } from '@/types/types';
 import { useState } from 'react';
 
-export default function TextareaWithButton() {
+export default function TextareaWithButton({ buttonText = '' }) {
   const addText = useTextStore((state) => state.addText);
   const [text, setText] = useState<string>('');
   const onSubmit = () => {
@@ -25,8 +25,8 @@ export default function TextareaWithButton() {
         placeholder="Type your notes here."
       />
       <div className="flex justify-end gap-2">
-        <Button className="bg-amber-100" onClick={onSubmit}>
-          Add Note
+        <Button className="bg-amber-300" onClick={onSubmit}>
+          {buttonText || 'Add Note'}
         </Button>
         <Button variant={'secondary'} className="bg-amber-50">
           Clear Note
