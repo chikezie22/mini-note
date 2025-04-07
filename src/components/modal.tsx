@@ -1,4 +1,4 @@
-import { useContext, useState, createContext } from 'react';
+import React, { useContext, useState, createContext, cloneElement } from 'react';
 import { ReactNode } from 'react';
 import { Button } from './ui/button';
 import { createPortal } from 'react-dom';
@@ -62,13 +62,16 @@ function Window({ children, name }: { children: ReactNode; name: string }) {
       {createPortal(
         <div className="fixed top-0 left-0 min-w-full min-h-dvh backdrop-blur-2xl bg-transparent z-20">
           <div
-            className="fixed grid gap-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-100/60 px-5 py-3 min-w-3xl rounded-2xl"
+            className="fixed grid gap-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-100/60 px-5 py-3 lg:px-10 lg:py-5 md:min-w-3xl rounded-2xl"
             ref={modalRef}
           >
             <Button onClick={close} className="place-self-end">
               <HiXMark />
             </Button>
-            {children}
+            {React.isValidElement(children) &&
+              cloneElement(children as React.ReactElement<{ onCloseModal?: () => void }>, {
+                onCloseModal: close,
+              })}
           </div>
         </div>,
         document.body

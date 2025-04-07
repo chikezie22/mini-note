@@ -5,6 +5,7 @@ type textState = {
   text: textType[];
   addText: (newText: textType) => void;
   updateText: (updatedText: string, id: string) => void;
+  deleteText: (id: string) => void;
 };
 
 export const useTextStore = create<textState>()(
@@ -21,6 +22,10 @@ export const useTextStore = create<textState>()(
             text: state.text.map((item) =>
               item.id === id ? { ...item, content: updatedText } : item
             ),
+          })),
+        deleteText: (id: string) =>
+          set((state) => ({
+            text: state.text.filter((item) => item.id !== id),
           })),
       }),
       { name: 'text-store' }
