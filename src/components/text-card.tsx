@@ -24,7 +24,12 @@ export default function TextCard({ text }: { text: textType }) {
             Delete
           </Modal.Open>
           <Modal.Window name="delete-note">
-            <Delete zustandTextId={text.id} />
+            <Delete
+              zustandTextId={text.id}
+              onCloseModal={() => {
+                /* Add modal close logic here */
+              }}
+            />
           </Modal.Window>
         </Modal>
       </div>

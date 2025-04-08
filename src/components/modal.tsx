@@ -31,7 +31,11 @@ function Open({
   opens: string;
   variant?: string;
 }) {
-  const { open } = useContext(ModalContext);
+  const context = useContext(ModalContext);
+  if (!context) {
+    throw new Error('Open must be used within a Modal provider');
+  }
+  const { open } = context;
   return (
     <>
       <Button
@@ -54,8 +58,10 @@ function Open({
 }
 
 function Window({ children, name }: { children: ReactNode; name: string }) {
-  const { openForm, close } = useContext(ModalContext);
-  const modalRef = useOutsideClick(close);
+  const context = useContext(ModalContext);
+  if (!context) throw new Error('Context not within provider');
+  const { close, openForm } = context;
+  const modalRef = useOutsideClick(close || (() => {}));
   if (name !== openForm) return null;
   return (
     <>
