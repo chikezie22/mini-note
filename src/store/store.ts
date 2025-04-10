@@ -8,6 +8,8 @@ type textState = {
   deleteText: (id: string) => void;
 };
 
+// we use zustand for state management in react it calls the create fundtion that takes a callback which uses set and get we usr the set function to and pass an object where we can call method and as well define our state
+
 export const useTextStore = create<textState>()(
   devtools(
     persist(
